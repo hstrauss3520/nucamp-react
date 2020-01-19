@@ -53,6 +53,9 @@ handleInputChange(event) {
   handleSubmit(values) {
     console.log('Current state is: ' + JSON.stringify(values));
     alert('Current state is: ' + JSON.stringify(values));
+
+    this.toggleModal();
+    this.props.addComment(this.props.campsiteId, values.rating, values.author, values.text);
   }
 
   render() {
@@ -71,9 +74,9 @@ handleInputChange(event) {
                                     <div className="form-group">
                                         <Label htmlFor="rating">Rating</Label>
                                         <Control.select model=".rating" id="rating" name="rating" 
-                                            className="form-control"
+                                            className="form-control">
                                             
-                                        >
+                                       
                                               <option>1</option>
                                               <option>2</option> 
                                               <option>3</option>
@@ -90,8 +93,8 @@ handleInputChange(event) {
                                               required,
                                               minLength: minLength(2),
                                               maxLength: maxLength(15)
-                                          }} 
-                                        >
+                                          }}> 
+                                        
                                               
                                         </Control.text>
                                         <Errors
@@ -104,7 +107,7 @@ handleInputChange(event) {
                                                 minLength: 'Must be at least 2 characters',
                                                 maxLength: 'Must be 15 characters or less'
                                         }}
-                                    />
+                                        />
                                     </div>
                                     <div className="form-group">
                                         <Label htmlFor="text"> Comment </Label>
@@ -140,7 +143,7 @@ function RenderCampsite({campsite}) {
   );
 }
 
-function RenderComments({comments}) {  
+function RenderComments({comments, addComment, campsiteId}) {  
   if (comments) {
     return (
       <div className="col-md-5 m-1">
@@ -163,7 +166,7 @@ function RenderComments({comments}) {
           );
         })}
 
-        <CommentForm />
+        <CommentForm campsiteId={campsiteId} addComment={addComment} />
       </div>
     
       );
@@ -190,7 +193,12 @@ function CampsiteInfo(props) {
 
                 <div className="row">
                     <RenderCampsite campsite={props.campsite} />
-                    <RenderComments comments={props.comments} />
+                    <RenderComments 
+                        comments={props.comments} 
+                        addComment={props.addComment}
+                        campsiteId= {props.campsite.id}
+
+                    />
                 </div>
             </div>
         );
