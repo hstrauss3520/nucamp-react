@@ -114,7 +114,7 @@ handleInputChange(event) {
                                             </Control.textarea>
                                         
                                     </div>
-                                    <Button type="submit" value="submit" color="primary">Login</Button>
+                                    <Button type="submit" value="submit" color="primary">Submit</Button>
                                 </LocalForm>            
                     </ModalBody>
                 </Modal>
